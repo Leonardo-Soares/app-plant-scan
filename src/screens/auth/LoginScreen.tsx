@@ -51,7 +51,6 @@ export function LoginScreen() {
 
               <View className='mt-2'>
                 <TextInput
-                  maxLength={6}
                   value={password}
                   placeholder="Senha"
                   secureTextEntry={true}
