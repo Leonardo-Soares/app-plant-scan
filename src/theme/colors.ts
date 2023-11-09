@@ -9,4 +9,5 @@ export const colors = {
   danger: '#FF0058',
   warning: '#FFC700',
   dark: '#000',
+  green: '#55AE53'
 };

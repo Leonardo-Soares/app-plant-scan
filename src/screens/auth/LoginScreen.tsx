@@ -1,115 +1,77 @@
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
-
-import React, { useState } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { colors } from '@theme/colors';
-import { formStyles, typography } from '@theme/globalStyles';
-import Logo from '../../../assets/icon.png';
-import { useLogin } from '@hooks/useLogin';
+import React, { useState } from 'react'
+import Logo from '../../../assets/img/logo.png'
+import { formStyles } from '@theme/globalStyles'
+import ButtonSolid from '@components/ButtonSolid'
+import { useNavigate } from '../../hooks/useNavigate'
+import useAuthenticatedStore from '@stores/useAuthenticatedStore'
+import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert } from 'react-native'
+import { useLogin } from '@hooks/useLogin'
 
 export function LoginScreen() {
-  const [email, onChangeEmail] = useState('');
-  const [password, onChangePassword] = useState('');
-  const { mutate, isLoading } = useLogin();
+  const { navigate } = useNavigate()
+  const { mutate, isLoading } = useLogin()
+  const [email, onChangeEmail] = useState('')
+  const [password, onChangePassword] = useState('')
+  const { setIsAuthenticated } = useAuthenticatedStore()
 
-  function handleLogin() {
+  function onSubmit() {
     if (!email || !password) {
       return Alert.alert('Preencha todos os campos');
     }
-    mutate({ email, password });
+    mutate({ email, password })
+    setIsAuthenticated(true)
   }
 
   return (
     <KeyboardAvoidingView
+      className="flex-1 bg-white"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1"
     >
-      <LinearGradient
-        colors={['#0a91c7', '#0a91c7']}
-        start={[0.0, 0.5]}
-        end={[1.0, 0.5]}
-        locations={[0.0, 1.0]}
-        style={{ flex: 1 }}
-      >
+      <ImageBackground className='flex-1' source={require('../../../assets/img/bg-fundo.png')}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
-            style={{ flex: 1, justifyContent: 'center', marginVertical: 32 }}
-          >
-            <View style={{ paddingHorizontal: 40 }}>
+          <View className='flex-1 justify-center my-4'>
+            <View className='mx-8'>
               <View>
                 <Image
-                  style={{
-                    width: 90,
-                    height: 60,
-                    alignSelf: 'center',
-                  }}
                   source={Logo}
+                  className='mx-auto'
                   resizeMode="contain"
                 />
               </View>
-              <View style={{ marginBottom: 32 }}>
-                <Text style={typography.titleClean}>Bem-vindo de volta</Text>
-                <Text style={typography.subTitleClean}>Logar na sua conta</Text>
-              </View>
-              <View style={formStyles.compactInputWrapper}>
-                <FontAwesome
-                  name="user"
-                  size={24}
-                  color={colors.primaryBlack}
-                />
-                <TextInput
-                  style={formStyles.compactInput}
-                  onChangeText={onChangeEmail}
-                  keyboardType="email-address"
-                  placeholder="E-mail"
-                  value={email}
-                />
-              </View>
+              <Text className='text-base text-center my-4'>
+                O App Planta é uma aplicativo de conexão de estudantes, professores e interessados para realizar o catálogo de plantas.
+              </Text>
+              <TextInput
+                value={email}
+                placeholder="E-mail"
+                keyboardType="email-address"
+                onChangeText={onChangeEmail}
+                style={formStyles.compactInput}
+              />
 
-              <View style={{ marginTop: 8, marginBottom: 32 }}>
-                <View style={formStyles.compactInputWrapper}>
-                  <FontAwesome
-                    name="lock"
-                    size={24}
-                    color={colors.primaryBlack}
-                  />
-                  <TextInput
-                    style={formStyles.compactInput}
-                    onChangeText={onChangePassword}
-                    secureTextEntry={true}
-                    maxLength={6}
-                    value={password}
-                    placeholder="Senha"
-                  />
-                </View>
+              <View className='mt-2'>
+                <TextInput
+                  maxLength={6}
+                  value={password}
+                  placeholder="Senha"
+                  secureTextEntry={true}
+                  onChangeText={onChangePassword}
+                  style={formStyles.compactInput}
+                />
               </View>
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <View style={{ paddingHorizontal: 40, marginBottom: 40 }}>
-          <TouchableOpacity
-            className="flex items-center justify-center h-12 bg-white rounded-lg"
-            onPress={handleLogin}
-          >
-            <Text style={{ color: colors.primary, fontWeight: '700' }}>
-              {isLoading ? <ActivityIndicator color={'#ffffff'} /> : 'Entrar'}
-            </Text>
-          </TouchableOpacity>
+
+        <View className='mx-8 mb-16'>
+          <ButtonSolid
+            text='Entrar'
+
+            isLoading={false}
+            handleLogin={onSubmit}
+          />
         </View>
-      </LinearGradient>
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 }

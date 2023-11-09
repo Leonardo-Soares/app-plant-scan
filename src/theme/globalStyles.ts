@@ -83,7 +83,13 @@ export const formStyles = StyleSheet.create({
     elevation: 1,
   },
   compactInput: {
+    height: 52,
     width: '100%',
-    marginLeft: 12,
+    borderWidth: 2,
+    borderRadius: 8,
+    paddingLeft: 12,
+    borderStyle: 'solid',
+    borderColor: colors.green,
+    backgroundColor: colors.white,
   },
 });
