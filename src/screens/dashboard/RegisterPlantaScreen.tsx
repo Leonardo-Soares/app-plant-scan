@@ -14,7 +14,7 @@ export function RegisterPlantaScreen() {
   }
 
   return (
-    <LayoutMain>
+    <LayoutMain ativaIcon={2}>
       <View className='mx-9 my-8'>
         <Text className='text-2xl font-bold'>Cadastro de Planta</Text>
         <View className='my-4'>

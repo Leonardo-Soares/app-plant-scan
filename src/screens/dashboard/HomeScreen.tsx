@@ -6,7 +6,7 @@ import { View, Text, ScrollView } from 'react-native'
 export function HomeScreen() {
 
   return (
-    <LayoutMain>
+    <LayoutMain ativaIcon={1}>
       <View className='mx-9 mt-8'>
         <Text className='text-2xl font-bold'>Últimos plantas cadastradas</Text>
       </View>

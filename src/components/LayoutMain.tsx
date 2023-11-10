@@ -3,7 +3,12 @@ import CardTopNavigation from './CardTopNavigation'
 import CardBottomNavigation from './CardBottomNavigation'
 import { SafeAreaView, ScrollView, View } from 'react-native'
 
-export default function LayoutMain({ children }: { children?: any }) {
+interface ILayout {
+    children?: any
+    ativaIcon?: number
+}
+
+export default function LayoutMain({ children, ativaIcon }: ILayout) {
     return (
         <SafeAreaView>
             <View className='w-full h-full'>
@@ -11,7 +16,7 @@ export default function LayoutMain({ children }: { children?: any }) {
                 <ScrollView >
                     {children}
                 </ScrollView>
-                <CardBottomNavigation />
+                <CardBottomNavigation ativaIcon={ativaIcon} />
             </View>
         </SafeAreaView>
     )

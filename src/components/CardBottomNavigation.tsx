@@ -7,7 +7,11 @@ import IcoPlantas from '../../assets/svg/IcoPlantas'
 import { TouchableOpacity, View } from 'react-native'
 import useAuthenticatedStore from '@stores/useAuthenticatedStore'
 
-export default function CardBottomNavigation() {
+interface IBottomNavigation {
+    ativaIcon?: number
+}
+
+export default function CardBottomNavigation({ ativaIcon }: IBottomNavigation) {
     const { navigate } = useNavigate()
     const { setIsAuthenticated } = useAuthenticatedStore()
 
@@ -27,10 +31,10 @@ export default function CardBottomNavigation() {
             style={{ backgroundColor: colors.greenSecondary }}
         >
             <TouchableOpacity onPress={onHome}>
-                <IcoHome />
+                <IcoHome active={ativaIcon == 1 ? true : false} />
             </TouchableOpacity>
             <TouchableOpacity onPress={onPlantas}>
-                <IcoPlantas />
+                <IcoPlantas active={ativaIcon == 2 ? true : false} />
             </TouchableOpacity>
             <TouchableOpacity onPress={onLogout}>
                 <IcoSair />
