@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "yourapp",
-    "slug": "yourapp",
-    "version": "1.0.0",
+    "name": "br.com.plantscan",
+    "slug": "br.com.plantscan",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.angeloricardoweb.yourapp"
+      "bundleIdentifier": "br.com.plantscan"
     },
     "android": {
       "adaptiveIcon": {
