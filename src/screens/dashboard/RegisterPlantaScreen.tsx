@@ -1,14 +1,16 @@
 import { colors } from '@theme/colors'
 import LayoutMain from '@components/LayoutMain'
 import { View, Text, Alert } from 'react-native'
+import { useNavigate } from '@hooks/useNavigate'
 import ButtonSolid from '@components/ButtonSolid'
 import InputPrimary from '@components/Forms/InputPrimary'
 
 export function RegisterPlantaScreen() {
-
+  const { navigate } = useNavigate()
 
   async function onSubmit() {
     Alert.alert('Sucesso!', 'Planta cadastrada com sucesso')
+    navigate('HomeScreen')
   }
 
   return (

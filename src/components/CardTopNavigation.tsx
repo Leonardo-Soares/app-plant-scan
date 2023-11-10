@@ -15,17 +15,16 @@ export default function CardTopNavigation() {
         navigate('HomeScreen')
         setModalMenu(false)
     }
-    function onCadastros() {
-        navigate('')
+    function onCadastrar() {
+        navigate('RegisterPlantaScreen')
         setModalMenu(false)
     }
-    function onCarteira() {
-        navigate('')
+    function onPerfil() {
+        navigate('PerfilScreen')
         setModalMenu(false)
     }
     function onLogout() {
         setIsAuthenticated(false)
-        navigate('LoginScreen')
         setModalMenu(false)
     }
 
@@ -40,11 +39,11 @@ export default function CardTopNavigation() {
                         <TouchableOpacity className='z-50' onPress={onHome}>
                             <Text className='text-4xl font-bold text-white'>Home</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className='z-50' onPress={() => navigate('')}>
-                            <Text className='text-4xl font-bold text-white'>Cadastros</Text>
+                        <TouchableOpacity className='z-50' onPress={onCadastrar}>
+                            <Text className='text-4xl font-bold text-white'>Cadastrar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className='z-50' onPress={() => navigate('')}>
-                            <Text className='text-4xl font-bold text-white'>Carteirinha</Text>
+                        <TouchableOpacity className='z-50' onPress={onPerfil}>
+                            <Text className='text-4xl font-bold text-white'>Perfil</Text>
                         </TouchableOpacity>
                         <TouchableOpacity className='z-50' onPress={onLogout}>
                             <Text className='text-4xl font-bold text-white'>Sair</Text>
