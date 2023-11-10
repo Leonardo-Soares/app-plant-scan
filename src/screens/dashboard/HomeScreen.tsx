@@ -1,9 +1,11 @@
 import LayoutMain from '@components/LayoutMain'
 import CardTopico from '@components/CardTopico'
+import { useNavigate } from '@hooks/useNavigate'
 import CardProduto from '@components/CardProduto'
 import { View, Text, ScrollView } from 'react-native'
 
 export function HomeScreen() {
+  const { navigate } = useNavigate()
 
   return (
     <LayoutMain ativaIcon={1}>
@@ -28,6 +30,7 @@ export function HomeScreen() {
       <View className='mt-4 mb-8 mx-9'>
         <CardTopico
           titulo='Carteirinha Virtual'
+          onPress={() => navigate('PerfilScreen')}
         />
         <CardTopico
           mt={20}
