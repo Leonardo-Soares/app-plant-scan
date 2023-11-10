@@ -2,14 +2,10 @@ import React, { useState } from 'react'
 import Logo from '../../../assets/img/logo.png'
 import { formStyles } from '@theme/globalStyles'
 import ButtonSolid from '@components/ButtonSolid'
-import { useNavigate } from '../../hooks/useNavigate'
 import useAuthenticatedStore from '@stores/useAuthenticatedStore'
 import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert } from 'react-native'
-import { useLogin } from '@hooks/useLogin'
 
 export function LoginScreen() {
-  const { navigate } = useNavigate()
-  const { mutate, isLoading } = useLogin()
   const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
   const { setIsAuthenticated } = useAuthenticatedStore()
@@ -18,7 +14,6 @@ export function LoginScreen() {
     if (!email || !password) {
       return Alert.alert('Preencha todos os campos');
     }
-    mutate({ email, password })
     setIsAuthenticated(true)
   }
 

@@ -1,7 +1,7 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen } from '@screens/dashboard/HomeScreen';
-import { SettingsScreen } from '@screens/dashboard/SettingsScreen';
+import React from 'react'
+import { HomeScreen } from '@screens/dashboard/HomeScreen'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { RegisterPlantaScreen } from '@screens/dashboard/RegisterPlantaScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +14,7 @@ export function DashboardRoutes() {
       initialRouteName="HomeScreen"
     >
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Stack.Screen name="RegisterPlantaScreen" component={RegisterPlantaScreen} />
     </Stack.Navigator>
   );
 }
