@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import LayoutMain from '@components/LayoutMain'
-import CardCarteira from '@components/CardCarteira';
+import CardCarteira from '@components/CardCarteira'
 
 export function PerfilScreen() {
 

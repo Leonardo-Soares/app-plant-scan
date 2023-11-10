@@ -1,12 +1,12 @@
+import { useState } from 'react'
+import { colors } from '@theme/colors'
 import LayoutMain from '@components/LayoutMain'
 import CardTopico from '@components/CardTopico'
 import { useNavigate } from '@hooks/useNavigate'
 import CardProduto from '@components/CardProduto'
 import { Camera, CameraType } from 'expo-camera'
-import { View, Text, ScrollView, Button, Modal } from 'react-native'
-import { useState } from 'react'
 import ButtonSolidSecondary from '@components/ButtonSolidSecondary'
-import { colors } from '@theme/colors'
+import { View, Text, ScrollView, Modal, Linking } from 'react-native'
 
 export function HomeScreen() {
   const { navigate } = useNavigate()
@@ -33,14 +33,14 @@ export function HomeScreen() {
     }
   }
 
-  function toggleCameraType() {
-    setType((current: any) => (current === CameraType.back ? CameraType.front : CameraType.back));
+  const openCamera = () => {
+    Linking.openURL('camera://'); // Use 'camera://' para abrir a câmera
   }
 
   return (
     <LayoutMain ativaIcon={1}>
       <View className='mx-9 mt-8'>
-        <Text className='text-2xl font-bold'>Últimos plantas cadastradas</Text>
+        <Text className='text-2xl font-bold'>Últimas plantas cadastradas</Text>
       </View>
       <View className='h-92'>
         <ScrollView
@@ -60,7 +60,7 @@ export function HomeScreen() {
       <View className='mt-4 mb-8 mx-9'>
         <CardTopico
           titulo='Scanear Qr Code'
-          onPress={toggleCameraType}
+          onPress={openCamera}
         />
         <CardTopico
           mt={20}

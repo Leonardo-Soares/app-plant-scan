@@ -1,6 +1,6 @@
-import { colors } from '@theme/colors';
 import React from 'react'
-import { ActivityIndicator, TouchableOpacity, Text } from 'react-native';
+import { colors } from '@theme/colors'
+import { ActivityIndicator, TouchableOpacity, Text } from 'react-native'
 
 export default function ButtonSolidSecondary({ handleLogin, isLoading, text, color }: { handleLogin?: any, isLoading?: boolean, text: string, color?: string }) {
     return (

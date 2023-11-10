@@ -1,8 +1,8 @@
 import React from 'react'
 import { colors } from '@theme/colors'
 import { useNavigate } from '@hooks/useNavigate'
-import { Text, Image, View, TouchableOpacity } from 'react-native'
 import ButtonSolidSecondary from './ButtonSolidSecondary'
+import { Text, Image, View, TouchableOpacity } from 'react-native'
 
 export default function CardProduto() {
     const { navigate } = useNavigate()

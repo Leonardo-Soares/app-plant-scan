@@ -1,5 +1,5 @@
-import { FontAwesome } from '@expo/vector-icons';
-import { View } from 'react-native';
+import { View } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 
 export function StarRating({ starsValue }: { starsValue: number }) {
   const starIcons = [];
