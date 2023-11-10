@@ -16,6 +16,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "expo": "~47.0.12",
+    "expo-camera": "~13.1.0",
     "expo-checkbox": "~2.2.2",
     "expo-constants": "~14.0.2",
     "expo-font": "~11.0.1",

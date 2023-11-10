@@ -37,6 +37,12 @@
         {
           "mode": "development"
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir $(PRODUCT_NAME) acesse sua câmera."
+        }
       ]
     ],
     "extra": {
