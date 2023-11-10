@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "br.com.plantscan",
-    "slug": "br.com.plantscan",
+    "name": "PlantScan",
+    "slug": "br-com-plantscan",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "br.com.plantscan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +38,28 @@
           "mode": "development"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "OneSignalNotificationServiceExtension",
+                  "bundleIdentifier": "br.com.plantscan.OneSignalNotificationServiceExtension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.br.com.plantscan.onesignal"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "dc52bd1a-d257-4dd5-af81-f4cd174d9103"
+      }
+    }
   }
 }
