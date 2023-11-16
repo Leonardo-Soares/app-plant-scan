@@ -1,3 +1,4 @@
+import { api } from '@services/axios'
 import React, { useState } from 'react'
 import Logo from '../../../assets/img/logo.png'
 import { formStyles } from '@theme/globalStyles'
@@ -10,11 +11,22 @@ export function LoginScreen() {
   const [password, onChangePassword] = useState('')
   const { setIsAuthenticated } = useAuthenticatedStore()
 
-  function onSubmit() {
-    if (!email || !password) {
-      return Alert.alert('Preencha todos os campos');
+  async function onSubmit() {
+    try {
+      const response = await api.post(`/login`, {
+        email: email,
+        senha: password
+      })     
+      if (response.data.success) {
+        setIsAuthenticated(true)
+      } else {
+        Alert.alert('Erro ao fazer login', response.data.message)
+      }
+    } catch (error: any) {
+      Alert.alert('Erro ao fazer login')
+      console.log('ERRO LOGIN =>', error.response.data)
+
     }
-    setIsAuthenticated(true)
   }
 
   return (

@@ -1,1 +1,1 @@
-export const API_CONTRACT = 'https://api-temp.vercel.app/api/angeloricardoweb/'
+export const API_CONTRACT = 'https://back-end-node-plantscan.onrender.com'
