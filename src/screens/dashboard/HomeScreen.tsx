@@ -10,10 +10,12 @@ import { useIsFocused } from '@react-navigation/native'
 import ButtonSolidSecondary from '@components/ButtonSolidSecondary'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { View, Text, ScrollView, Modal, Linking } from 'react-native'
+import Loading from '@components/Loading'
 
 export function HomeScreen() {
   const isFocused = useIsFocused()
   const { navigate } = useNavigate()
+  const [loading, setLoading] = useState(true)
   const [listaPlantas, setListaPlantas] = useState([])
   const [dadosUsuario, setDadosUsuario] = useState<any>()
   // const [type, setType] = useState(CameraType.back)
@@ -48,6 +50,7 @@ export function HomeScreen() {
     } catch (error: any) {
       console.log('ERRO LISTA PLANTAS =>', error.response.data)
     }
+    setLoading(false)
   }
 
   async function getDadosUser() {
@@ -60,10 +63,10 @@ export function HomeScreen() {
     } catch (error) {
       console.log('ERRO STORAGE');
     }
+    getPlantas()
   }
 
   useEffect(() => {
-    getPlantas()
     getDadosUser()
   }, [])
 
@@ -73,39 +76,44 @@ export function HomeScreen() {
   }, [isFocused])
 
   return (
-    <LayoutMain ativaIcon={1}>
-      <View className='mx-9 mt-8'>
-        <Text className='text-2xl font-bold'>Últimas plantas cadastradas</Text>
-      </View>
-      <View className='h-92'>
-        <ScrollView
-          horizontal
-          className='ml-6 mt-2'
-          contentContainerStyle={{ flexDirection: 'row' }}
-        >
-          {listaPlantas && listaPlantas.map((item: any) => (
-            <CardProduto
-              id={item.id}
-              key={item.id}
-              imagem={item.image}
-              nome_popular={item.name_popular}
-              nome_cientifico={item.name_scientific}
-            />
-          ))}
+    <>
+      {loading &&
+        <Loading />
+      }
+      <LayoutMain ativaIcon={1}>
+        <View className='mx-9 mt-8'>
+          <Text className='text-2xl font-bold'>Últimas plantas cadastradas</Text>
+        </View>
+        <View className='h-92'>
+          <ScrollView
+            horizontal
+            className='ml-6 mt-2'
+            contentContainerStyle={{ flexDirection: 'row' }}
+          >
+            {listaPlantas && listaPlantas.map((item: any) => (
+              <CardProduto
+                id={item.id}
+                key={item.id}
+                imagem={item.image}
+                nome_popular={item.name_popular}
+                nome_cientifico={item.name_scientific}
+              />
+            ))}
 
-        </ScrollView>
-      </View>
-      <View className='mt-4 mb-8 mx-9'>
-        {/* <CardTopico
+          </ScrollView>
+        </View>
+        <View className='mt-4 mb-8 mx-9'>
+          {/* <CardTopico
           titulo='Scanear Qr Code'
           onPress={openCamera}
         /> */}
-        <CardTopico
-          mt={20}
-          titulo='Carteirinha Virtual'
-          onPress={() => navigate('PerfilScreen', dadosUsuario.id)}
-        />
-      </View>
-    </LayoutMain>
+          <CardTopico
+            mt={20}
+            titulo='Carteirinha Virtual'
+            onPress={() => navigate('PerfilScreen', dadosUsuario.id)}
+          />
+        </View>
+      </LayoutMain>
+    </>
   );
 }

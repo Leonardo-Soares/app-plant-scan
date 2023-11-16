@@ -7,7 +7,7 @@ import useAuthenticatedStore from '@stores/useAuthenticatedStore'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Modal, Text, Image, TouchableOpacity, View } from 'react-native'
 
-export default function CardTopNavigation() {
+export default function CardTopNavigation({ idUsuario }: { idUsuario?: any }) {
     const { navigate } = useNavigate()
     const [modalMenu, setModalMenu] = useState(false)
     const [nomeUsuario, setNomeUsuario] = useState('')
@@ -22,7 +22,7 @@ export default function CardTopNavigation() {
         setModalMenu(false)
     }
     function onPerfil() {
-        navigate('PerfilScreen')
+        navigate('PerfilScreen', idUsuario)
         setModalMenu(false)
     }
     function onLogout() {
@@ -35,13 +35,13 @@ export default function CardTopNavigation() {
             const jsonValue = await AsyncStorage.getItem('dados-user');
             if (jsonValue) {
                 const jsonDadosUser = JSON.parse(jsonValue)
-              
+
                 // Divida a string usando espaço como delimitador
                 const partesDoNome = jsonDadosUser.name.split(' ')
 
                 // Pegue o primeiro elemento do array resultante
                 const primeiroNome = partesDoNome[0]
-                
+
                 setNomeUsuario(primeiroNome)
 
             }

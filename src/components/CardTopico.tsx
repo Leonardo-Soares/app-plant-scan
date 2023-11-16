@@ -1,7 +1,13 @@
 import React from 'react'
 import { Text, Image, TouchableOpacity } from 'react-native'
 
-export default function CardTopico({ titulo, onPress, mt }: { titulo: string, onPress?: any, mt?: any }) {
+interface IHeader {
+    mt?: any
+    onPress?: any
+    titulo: string
+}
+
+export default function CardTopico({ titulo, onPress, mt }: IHeader) {
     return (
         <TouchableOpacity
             onPress={onPress}

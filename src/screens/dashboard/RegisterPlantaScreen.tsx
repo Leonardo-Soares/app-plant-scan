@@ -6,10 +6,12 @@ import ButtonSolid from '@components/ButtonSolid'
 import InputPrimary from '@components/Forms/InputPrimary'
 import { api } from '@services/axios'
 import { useState } from 'react'
+import Loading from '@components/Loading'
 
 export function RegisterPlantaScreen() {
   const { navigate } = useNavigate()
   const [efeitos, setEfeitos] = useState('')
+  const [loading, setLoading] = useState(false)
   const [nomesGrupo, setNomesGrupo] = useState('')
   const [nomePopular, setNomePopular] = useState('')
   const [curiosidades, setCuriosidades] = useState('')
@@ -17,6 +19,7 @@ export function RegisterPlantaScreen() {
   const [caracteristicas, setCaracteristicas] = useState('')
 
   async function onSubmit() {
+    setLoading(true)
     try {
       const response = await api.post(`/planta`, {
         effects: efeitos,
@@ -39,50 +42,56 @@ export function RegisterPlantaScreen() {
       Alert.alert('Erro ao cadastrar planta')
       console.log('ERRO CADASTRO PLANTA =>', error.response.data)
     }
+    setLoading(false)
   }
 
   return (
-    <LayoutMain ativaIcon={2}>
-      <View className='mx-9 my-8'>
-        <Text className='text-2xl font-bold'>Cadastro de Planta</Text>
-        <View className='my-4'>
-          <InputPrimary
-            placeholder='Nome poupular'
-            onChangeText={setNomePopular}
-          />
-          <InputPrimary
-            mt={8}
-            placeholder='Nome científico'
-            onChangeText={setNomeCientifico}
-          />
-          <InputPrimary
-            mt={8}
-            placeholder='Curiosidades'
-            onChangeText={setCuriosidades}
-          />
-          <InputPrimary
-            mt={8}
-            onChangeText={setEfeitos}
-            placeholder='Efeitos da planta'
-          />
-          <InputPrimary
-            mt={8}
-            placeholder='Características'
-            onChangeText={setCaracteristicas}
-          />
-          <InputPrimary
-            mt={8}
-            onChangeText={setNomesGrupo}
-            placeholder='Em que grupo a espécie se encaixa'
+    <>
+      {loading &&
+        <Loading />
+      }
+      <LayoutMain ativaIcon={2}>
+        <View className='mx-9 my-8'>
+          <Text className='text-2xl font-bold'>Cadastro de Planta</Text>
+          <View className='my-4'>
+            <InputPrimary
+              placeholder='Nome poupular'
+              onChangeText={setNomePopular}
+            />
+            <InputPrimary
+              mt={8}
+              placeholder='Nome científico'
+              onChangeText={setNomeCientifico}
+            />
+            <InputPrimary
+              mt={8}
+              placeholder='Curiosidades'
+              onChangeText={setCuriosidades}
+            />
+            <InputPrimary
+              mt={8}
+              onChangeText={setEfeitos}
+              placeholder='Efeitos da planta'
+            />
+            <InputPrimary
+              mt={8}
+              placeholder='Características'
+              onChangeText={setCaracteristicas}
+            />
+            <InputPrimary
+              mt={8}
+              onChangeText={setNomesGrupo}
+              placeholder='Em que grupo a espécie se encaixa'
+            />
+          </View>
+          <ButtonSolid
+            text='Cadastrar'
+            handleLogin={onSubmit}
+            backgroundColor={colors.greenSecondary}
           />
         </View>
-        <ButtonSolid
-          text='Cadastrar'
-          handleLogin={onSubmit}
-          backgroundColor={colors.greenSecondary}
-        />
-      </View>
 
-    </LayoutMain>
+      </LayoutMain>
+    </>
   );
 }

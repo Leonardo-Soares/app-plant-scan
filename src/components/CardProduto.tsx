@@ -15,7 +15,7 @@ export default function CardProduto({ nome_cientifico, nome_popular, imagem, id 
     const { navigate } = useNavigate()
 
     return (
-        <TouchableOpacity onPress={() => navigate('DetalhesPlantaScreen')} className='bg-white rounded-lg px-2 py-6 mx-2 my-2 w-52' style={{ elevation: 8 }}>
+        <TouchableOpacity onPress={() => navigate('DetalhesPlantaScreen', { id })} className='bg-white rounded-lg px-2 py-6 mx-2 my-2 w-52' style={{ elevation: 8 }}>
             <View className='mx-auto w-32 h-32 bg-red-100 rounded-full' style={{ elevation: 6 }}>
                 <Image
                     resizeMode='cover'

@@ -3,8 +3,10 @@ import { ActivityIndicator, View } from 'react-native'
 
 export default function Loading() {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:"#09090A" }}>
-            <ActivityIndicator color={"#7c3aed"} />
+        <View
+            className='flex-1 h-full w-full items-center justify-center absolute z-50'
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
+            <ActivityIndicator size={52} color={"#0B845C"} />
         </View>
     )
 }
