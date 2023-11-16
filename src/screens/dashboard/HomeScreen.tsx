@@ -63,6 +63,7 @@ export function HomeScreen() {
         >
           {listaPlantas && listaPlantas.map((item: any) => (
             <CardProduto
+              id={item.id}
               key={item.id}
               imagem={item.image}
               nome_popular={item.name_popular}

@@ -1,7 +1,38 @@
+import { api } from '@services/axios'
+import { useEffect, useState } from 'react'
 import LayoutMain from '@components/LayoutMain'
 import { View, Text, Image } from 'react-native'
 
-export function DetalhesPlantaScreen() {
+interface IDetalhePlanta {
+  id: any
+  effects: string
+  curiosities: string
+  names_group: string
+  name_popular: string
+  name_scientific: string
+  characteristics: string
+}
+
+export function DetalhesPlantaScreen(props: any) {
+  const idPlanta = props.route.params.id
+  
+  const [planta, setPlanta] = useState<IDetalhePlanta>()
+
+  async function getPlanta() {
+    try {
+      const response = await api.get(`/planta/${idPlanta}`)
+      if (response.data.success) {
+        setPlanta(response.data.results)
+      }
+    } catch (error: any) {
+      console.log('ERRO LISTA PLANTAS =>', error.response.data)
+    }
+  }
+
+  useEffect(() => {
+    getPlanta()
+  }, [])
+
   return (
     <LayoutMain>
       <View className='mx-9 mt-8 mb-4'>
@@ -11,13 +42,29 @@ export function DetalhesPlantaScreen() {
         <View className='mx-auto w-32 h-32 bg-red-100 rounded-full' style={{ elevation: 6 }}>
           <Image className='w-full h-full rounded-full' resizeMode='cover' source={require('../../../assets/img/temp/planta.jpg')} />
         </View>
+        <View className='items-center mt-2 mb-4'>
+          <Text className='text-lg text-[#707070]'>Nome popular</Text>
+          <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.name_popular}</Text>
+        </View>
         <View className='items-center mt-4'>
-          <Text className='text-lg text-[#707070]'>Nome</Text>
-          <Text className='text-2xl font-bold text-[#0B845C]'>Tillandsia</Text>
+          <Text className='text-lg text-[#707070]'>Nome cientifíco</Text>
+          <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.name_scientific}</Text>
+        </View>        
+        <View className='items-center mt-2 mb-4'>
+          <Text className='text-lg text-[#707070]'>Curiosidades</Text>
+          <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.curiosities}</Text>
         </View>
         <View className='items-center mt-2 mb-4'>
-          <Text className='text-lg text-[#707070]'>Classe</Text>
-          <Text className='text-2xl font-bold text-[#0B845C]'>Liliopsida</Text>
+          <Text className='text-lg text-[#707070]'>Efeitos</Text>
+          <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.curiosities}</Text>
+        </View>
+        <View className='items-center mt-2 mb-4'>
+          <Text className='text-lg text-[#707070]'>Características</Text>
+          <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.curiosities}</Text>
+        </View>
+        <View className='items-center mt-2 mb-4'>
+          <Text className='text-lg text-[#707070]'>Grupo(s)</Text>
+          <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.curiosities}</Text>
         </View>
       </View>
     </LayoutMain>

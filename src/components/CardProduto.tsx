@@ -5,12 +5,13 @@ import ButtonSolidSecondary from './ButtonSolidSecondary'
 import { Text, Image, View, TouchableOpacity } from 'react-native'
 
 interface ICardPlanta {
+    id: any
     imagem: string
     nome_popular: string
     nome_cientifico: string
 }
 
-export default function CardProduto({ nome_cientifico, nome_popular, imagem }: ICardPlanta) {
+export default function CardProduto({ nome_cientifico, nome_popular, imagem, id }: ICardPlanta) {
     const { navigate } = useNavigate()
 
     return (
@@ -33,7 +34,7 @@ export default function CardProduto({ nome_cientifico, nome_popular, imagem }: I
             <ButtonSolidSecondary
                 text='Detalhes'
                 color={colors.greenSecondary}
-                handleLogin={() => navigate('DetalhesPlantaScreen')}
+                handleLogin={() => navigate('DetalhesPlantaScreen', { id })}
             />
         </TouchableOpacity>
     )
