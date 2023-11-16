@@ -6,11 +6,13 @@ import CardTopico from '@components/CardTopico'
 import { useNavigate } from '@hooks/useNavigate'
 import CardProduto from '@components/CardProduto'
 // import { Camera, CameraType } from 'expo-camera'
+import { useIsFocused } from '@react-navigation/native'
 import ButtonSolidSecondary from '@components/ButtonSolidSecondary'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { View, Text, ScrollView, Modal, Linking } from 'react-native'
 
 export function HomeScreen() {
+  const isFocused = useIsFocused()
   const { navigate } = useNavigate()
   const [listaPlantas, setListaPlantas] = useState([])
   const [dadosUsuario, setDadosUsuario] = useState<any>()
@@ -64,6 +66,11 @@ export function HomeScreen() {
     getPlantas()
     getDadosUser()
   }, [])
+
+  useEffect(() => {
+    getPlantas()
+    getDadosUser()
+  }, [isFocused])
 
   return (
     <LayoutMain ativaIcon={1}>
