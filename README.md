@@ -1,7 +1,9 @@
 # Gera APK
 - eas build -p android --profile preview
 
-
+# Rodar o prebuild (android)
+serve para libs nativas
+- npx expo prebuild
 
 npx expo prebuild
 
