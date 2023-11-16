@@ -53,7 +53,7 @@ export default function CardTopNavigation() {
                 </View>
             </Modal>
             <View
-                className='w-full flex-row justify-between items-center px-8 py-5 z-50 mt-12'
+                className='w-full flex-row justify-between items-center px-8 pb-5 pt-8 z-50'
                 style={{ backgroundColor: colors.greenSecondary, elevation: 12 }}
             >
                 <View>

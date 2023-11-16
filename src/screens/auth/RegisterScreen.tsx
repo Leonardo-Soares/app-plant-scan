@@ -4,7 +4,7 @@ import Logo from '../../../assets/img/logo.png'
 import { useNavigate } from '@hooks/useNavigate'
 import { formStyles } from '@theme/globalStyles'
 import ButtonSolid from '@components/ButtonSolid'
-import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, ScrollView } from 'react-native'
 
 export function RegisterScreen() {
   const { navigate } = useNavigate()
@@ -20,19 +20,20 @@ export function RegisterScreen() {
       const response = await api.post(`/usuario`, {
         name: nome,
         email: email,
+        senha: password,
         telefone: telefone,
-        senha: confirmPassword,
         numero_matricula: matricula
       })
 
       if (response.data.success) {
         Alert.alert('Sucesso', response.data.message)
+        navigate('LoginScreen')
       } else {
-        Alert.alert('Erro ao fazer login', response.data.message)
+        Alert.alert('Erro ao cadastrar usuário', response.data.message)
       }
 
     } catch (error: any) {
-      Alert.alert('Erro ao fazer login')
+      Alert.alert('Erro ao cadastrar usuário')
       console.log('ERRO LOGIN =>', error.response.data)
     }
   }
