@@ -1,16 +1,13 @@
-import { colors } from '@theme/colors'
 import { api } from '@services/axios'
+import Loading from '@components/Loading'
 import { useEffect, useState } from 'react'
 import LayoutMain from '@components/LayoutMain'
 import CardTopico from '@components/CardTopico'
 import { useNavigate } from '@hooks/useNavigate'
 import CardProduto from '@components/CardProduto'
-// import { Camera, CameraType } from 'expo-camera'
+import { View, Text, ScrollView } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
-import ButtonSolidSecondary from '@components/ButtonSolidSecondary'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { View, Text, ScrollView, Modal, Linking } from 'react-native'
-import Loading from '@components/Loading'
 
 export function HomeScreen() {
   const isFocused = useIsFocused()
@@ -18,28 +15,6 @@ export function HomeScreen() {
   const [loading, setLoading] = useState(true)
   const [listaPlantas, setListaPlantas] = useState([])
   const [dadosUsuario, setDadosUsuario] = useState<any>()
-  // const [type, setType] = useState(CameraType.back)
-  // const [permission, requestPermission] = Camera.useCameraPermissions()
-
-  // if (permission) {
-  //   if (!permission.granted) {
-  //     // Camera permissions are not granted yet
-  //     return (
-  //       <Modal visible transparent>
-  //         <View className='flex-1 w-full items-center justify-center'>
-  //           <Text style={{ textAlign: 'center' }}>Permitir que o App use sua câmera ?</Text>
-  //           <View className='w-52 mt-2'>
-  //             <ButtonSolidSecondary
-  //               text='Solicitar Permissão'
-  //               color={colors.greenSecondary}
-  //               handleLogin={requestPermission}
-  //             />
-  //           </View>
-  //         </View>
-  //       </Modal>
-  //     )
-  //   }
-  // }
 
   async function getPlantas() {
     try {
@@ -103,10 +78,10 @@ export function HomeScreen() {
           </ScrollView>
         </View>
         <View className='mt-4 mb-8 mx-9'>
-          {/* <CardTopico
-          titulo='Scanear Qr Code'
-          onPress={openCamera}
-        /> */}
+          <CardTopico
+            titulo='Scanear Qr Code'
+            onPress={() => { }}
+          />
           <CardTopico
             mt={20}
             titulo='Carteirinha Virtual'
