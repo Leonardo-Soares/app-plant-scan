@@ -1,8 +1,9 @@
 import { api } from '@services/axios'
+import Loading from '@components/Loading'
 import { useEffect, useState } from 'react'
+import QRCode from 'react-native-qrcode-svg'
 import LayoutMain from '@components/LayoutMain'
 import { View, Text, Image } from 'react-native'
-import Loading from '@components/Loading'
 
 interface IDetalhePlanta {
   id: any
@@ -47,8 +48,16 @@ export function DetalhesPlantaScreen(props: any) {
           <Text className='text-2xl font-bold'>Detalhes</Text>
         </View>
         <View className='bg-white rounded-lg px-2 py-6 mx-9 mb-8' style={{ elevation: 8 }}>
-          <View className='mx-auto w-32 h-32 bg-red-100 rounded-full' style={{ elevation: 6 }}>
-            <Image className='w-full h-full rounded-full' resizeMode='cover' source={require('../../../assets/img/temp/planta.jpg')} />
+          {/* <View className='mx-auto w-32 h-32 bg-red-100 rounded-full' style={{ elevation: 6 }}> */}
+          <View className='mx-auto w-32 h-32' style={{ elevation: 6 }}>
+            {/* <Image className='w-full h-full rounded-full' resizeMode='cover' source={require('../../../assets/img/temp/planta.jpg')} /> */}
+            {planta?.id &&
+              <View className='w-full justify-center items-center p-4'>
+                <QRCode
+                  value={planta.id.toString()}
+                />
+              </View>
+            }
           </View>
           <View className='items-center mt-2 mb-4'>
             <Text className='text-lg text-[#707070]'>Nome popular</Text>
