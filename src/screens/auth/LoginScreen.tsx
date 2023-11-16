@@ -6,6 +6,7 @@ import { formStyles } from '@theme/globalStyles'
 import ButtonSolid from '@components/ButtonSolid'
 import useAuthenticatedStore from '@stores/useAuthenticatedStore'
 import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, TouchableOpacity } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export function LoginScreen() {
   const { navigate } = useNavigate()
@@ -21,6 +22,10 @@ export function LoginScreen() {
       })
       if (response.data.success) {
         setIsAuthenticated(true)
+        const jsonValue = JSON.stringify(response.data.results)
+        const teste = await AsyncStorage.setItem('dados-user', jsonValue)
+        console.log(teste)
+        
       } else {
         Alert.alert('Erro ao fazer login', response.data.message)
       }

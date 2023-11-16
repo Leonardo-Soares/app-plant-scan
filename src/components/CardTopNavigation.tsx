@@ -1,14 +1,16 @@
 import { colors } from '@theme/colors'
-import React, { useState } from 'react'
 import IcoMenu from '../../assets/svg/IcoMenu'
 import IcoClose from '../../assets/svg/IcoClose'
 import { useNavigate } from '@hooks/useNavigate'
+import React, { useEffect, useState } from 'react'
 import useAuthenticatedStore from '@stores/useAuthenticatedStore'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Modal, Text, Image, TouchableOpacity, View } from 'react-native'
 
 export default function CardTopNavigation() {
     const { navigate } = useNavigate()
     const [modalMenu, setModalMenu] = useState(false)
+    const [nomeUsuario, setNomeUsuario] = useState('')
     const { setIsAuthenticated } = useAuthenticatedStore()
 
     function onHome() {
@@ -27,6 +29,30 @@ export default function CardTopNavigation() {
         setIsAuthenticated(false)
         setModalMenu(false)
     }
+
+    async function getDadosUser() {
+        try {
+            const jsonValue = await AsyncStorage.getItem('dados-user');
+            if (jsonValue) {
+                const jsonDadosUser = JSON.parse(jsonValue)
+              
+                // Divida a string usando espaço como delimitador
+                const partesDoNome = jsonDadosUser.name.split(' ')
+
+                // Pegue o primeiro elemento do array resultante
+                const primeiroNome = partesDoNome[0]
+                
+                setNomeUsuario(primeiroNome)
+
+            }
+        } catch (error) {
+            console.log('ERRO STORAGE');
+        }
+    }
+
+    useEffect(() => {
+        getDadosUser()
+    }, [])
 
     return (
         <>
@@ -58,7 +84,7 @@ export default function CardTopNavigation() {
             >
                 <View>
                     <Text className='text-white'>Olá,</Text>
-                    <Text className='text-white text-2xl font-semibold'>Carlos</Text>
+                    <Text className='text-white text-2xl font-semibold'>{nomeUsuario ?? 'Usuário'}</Text>
                 </View>
                 <TouchableOpacity onPress={() => setModalMenu(true)}>
                     <IcoMenu />

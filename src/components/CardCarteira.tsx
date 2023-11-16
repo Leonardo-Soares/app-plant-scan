@@ -1,7 +1,14 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-export default function CardCarteira() {
+interface IDadosUser {
+    nome: string
+    email: string
+    telefone: string
+    numero_carteira: string
+}
+
+export default function CardCarteira({ nome, numero_carteira, telefone, email }: IDadosUser) {
     return (
         <View
             className='bg-white rounded-lg p-5'
@@ -10,7 +17,7 @@ export default function CardCarteira() {
             }}
         >
             <Text className='text-[#353535] text-2xl text-center font-bold border-b-2 border-solid border-[#D9D9D9] pb-3'>
-                Carlos Carvalho
+                {nome}
             </Text>
 
             <Text className='text-[#7A7A7A] text-center pt-3'>
@@ -18,7 +25,7 @@ export default function CardCarteira() {
             </Text>
 
             <Text className='text-[#353535] text-3xl font-extrabold text-center'>
-                018752052112-20
+                {numero_carteira}
             </Text>
 
             <View className='mt-4'>
@@ -26,7 +33,7 @@ export default function CardCarteira() {
                     Telefone
                 </Text>
                 <Text className='text-[#353535] text-xl font-bold'>
-                    (99) 9 999-9999
+                    {telefone}
                 </Text>
             </View>
             <View className='mt-2'>
@@ -34,12 +41,9 @@ export default function CardCarteira() {
                     E-mail
                 </Text>
                 <Text className='text-[#353535] text-xl font-bold'>
-                    teste@email.com
+                    {email}
                 </Text>
             </View>
-
-
         </View>
-
     )
 }

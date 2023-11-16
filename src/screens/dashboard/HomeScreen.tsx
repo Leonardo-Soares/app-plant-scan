@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react'
 import { colors } from '@theme/colors'
+import { api } from '@services/axios'
+import { useEffect, useState } from 'react'
 import LayoutMain from '@components/LayoutMain'
 import CardTopico from '@components/CardTopico'
 import { useNavigate } from '@hooks/useNavigate'
 import CardProduto from '@components/CardProduto'
 // import { Camera, CameraType } from 'expo-camera'
 import ButtonSolidSecondary from '@components/ButtonSolidSecondary'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { View, Text, ScrollView, Modal, Linking } from 'react-native'
-import { api } from '@services/axios'
 
 export function HomeScreen() {
   const { navigate } = useNavigate()
   const [listaPlantas, setListaPlantas] = useState([])
+  const [dadosUsuario, setDadosUsuario] = useState<any>()
   // const [type, setType] = useState(CameraType.back)
   // const [permission, requestPermission] = Camera.useCameraPermissions()
 
@@ -46,8 +48,21 @@ export function HomeScreen() {
     }
   }
 
+  async function getDadosUser() {
+    try {
+      const jsonValue = await AsyncStorage.getItem('dados-user');
+      if (jsonValue) {
+        const jsonDadosUser = JSON.parse(jsonValue)
+        setDadosUsuario(jsonDadosUser)
+      }
+    } catch (error) {
+      console.log('ERRO STORAGE');
+    }
+  }
+
   useEffect(() => {
     getPlantas()
+    getDadosUser()
   }, [])
 
   return (
@@ -81,7 +96,7 @@ export function HomeScreen() {
         <CardTopico
           mt={20}
           titulo='Carteirinha Virtual'
-          onPress={() => navigate('PerfilScreen')}
+          onPress={() => navigate('PerfilScreen', dadosUsuario.id)}
         />
       </View>
     </LayoutMain>
