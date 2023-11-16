@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import QRCode from 'react-native-qrcode-svg'
 
 interface IDadosUser {
     nome: string
@@ -19,6 +20,14 @@ export default function CardCarteira({ nome, numero_carteira, telefone, email }:
             <Text className='text-[#353535] text-2xl text-center font-bold border-b-2 border-solid border-[#D9D9D9] pb-3'>
                 {nome}
             </Text>
+
+            {numero_carteira &&
+                <View className='w-full justify-center items-center pt-3'>
+                    <QRCode
+                        value={numero_carteira}
+                    />
+                </View>
+            }
 
             <Text className='text-[#7A7A7A] text-center pt-3'>
                 Número da Carteirinha
