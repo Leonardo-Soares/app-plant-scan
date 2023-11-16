@@ -1,12 +1,14 @@
 import { api } from '@services/axios'
 import React, { useState } from 'react'
 import Logo from '../../../assets/img/logo.png'
+import { useNavigate } from '@hooks/useNavigate'
 import { formStyles } from '@theme/globalStyles'
 import ButtonSolid from '@components/ButtonSolid'
 import useAuthenticatedStore from '@stores/useAuthenticatedStore'
-import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert } from 'react-native'
+import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, TouchableOpacity } from 'react-native'
 
 export function LoginScreen() {
+  const { navigate } = useNavigate()
   const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
   const { setIsAuthenticated } = useAuthenticatedStore()
@@ -16,7 +18,7 @@ export function LoginScreen() {
       const response = await api.post(`/login`, {
         email: email,
         senha: password
-      })     
+      })
       if (response.data.success) {
         setIsAuthenticated(true)
       } else {
@@ -46,7 +48,7 @@ export function LoginScreen() {
                 />
               </View>
               <Text className='text-base text-center my-4'>
-                O App Planta é uma aplicativo de conexão de estudantes, professores e interessados para realizar o catálogo de plantas.
+                O PlantScan é uma aplicativo de conexão de estudantes, professores e interessados para realizar o catálogo de plantas.
               </Text>
               <TextInput
                 value={email}
@@ -64,6 +66,14 @@ export function LoginScreen() {
                   onChangeText={onChangePassword}
                   style={formStyles.compactInput}
                 />
+              </View>
+              <View className='mt-2'>
+                <TouchableOpacity
+                  className='w-full items-end'
+                  onPress={()=> navigate('RegisterScreen')}
+                >
+                  <Text>Criar conta</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
