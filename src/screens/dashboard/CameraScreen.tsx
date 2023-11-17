@@ -1,72 +1,70 @@
-import { useEffect, useState } from 'react'
-import LayoutMain from '@components/LayoutMain'
-import { useNavigate } from '@hooks/useNavigate'
-import { Camera, CameraType } from 'expo-camera'
-import { BarCodeScanner } from 'expo-barcode-scanner'
-import { useIsFocused } from '@react-navigation/native'
-import { View, Text, Button, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import BarcodeMask from 'react-native-barcode-mask'
+import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
+import { Button, Dimensions, StyleSheet, TouchableOpacity, View, Text } from 'react-native'
+
+const finderWidth: number = 280
+const finderHeight: number = 230
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
+const viewMinX = (width - finderWidth) / 2
+const viewMinY = (height - finderHeight) / 2
+
 
 export function CameraScreen() {
-  const isFocused = useIsFocused()
-  const { navigate } = useNavigate()
-  const [scanned, setScanned] = useState(false)
-  const [type, setType] = useState(CameraType.back)
-  const [hasPermission, setHasPermission] = useState(null)
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null)
+  const [type, setType] = useState<any>(BarCodeScanner.Constants.Type.back)
+  const [scanned, setScanned] = useState<boolean>(false)
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
+    (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync()
-      console.log('status', status)
-      console.log('teste')
-
       setHasPermission(status === 'granted')
-    };
+    })()
+  }, [])
 
-    getBarCodeScannerPermissions();
-  }, []);
-
-  const handleBarCodeScanned = ({ type, data }: any) => {
-    setScanned(true)
-
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  }
-
-  const handleBarCodeScannedTeste = ({ type, data }: any) => {
-    console.log(data);
-    console.log(type);
-
-    alert(`hello!`);
+  const handleBarCodeScanned = (scanningResult: BarCodeScannerResult) => {
+    if (!scanned) {
+      const { type, data, bounds: { origin } = {} } = scanningResult
+      // @ts-ignore
+      const { x, y } = origin
+      if (x >= viewMinX && y >= viewMinY && x <= (viewMinX + finderWidth / 2) && y <= (viewMinY + finderHeight / 2)) {
+        setScanned(true)
+        alert(`QR Code do tipo ${type} e dados:  ${data}`)
+      }
+    }
   }
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>Buscando permissão...</Text>
   }
-
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>Você não autorizou acessr sua câmera</Text>
   }
-
-  function toggleCameraType() {
-    setType((current: any) => (current === CameraType.back ? CameraType.front : CameraType.back));
-  }
-
   return (
-    <LayoutMain>
-      <Camera className='flex-1 w-full h-[50vh]' type={type} />
-      <View className='mx-9 z-50'>
-        <Text className='text-2xl font-bold text-center py-5'>Validar câmera</Text>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ?
-            handleBarCodeScannedTeste
-            :
-            handleBarCodeScanned}
-        />
-        {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
-
-        <TouchableOpacity className='h-20 w-full bg-red-100 items-center justify-center' onPress={toggleCameraType}>
-          <Text>Flip Camera</Text>
-        </TouchableOpacity>
-      </View>
-    </LayoutMain>
-  );
+    <View className='flex-1'>
+      <BarCodeScanner onBarCodeScanned={handleBarCodeScanned}
+        type={type}
+        style={[StyleSheet.absoluteFillObject]}
+        className='flex-1 justify-center items-center'
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+      >
+        <View className='flex-1 bg-transparent flex-row'>
+          <TouchableOpacity
+            className='flex-1 items-end'
+            onPress={() => {
+              setType(
+                type === BarCodeScanner.Constants.Type.back
+                  ? BarCodeScanner.Constants.Type.front
+                  : BarCodeScanner.Constants.Type.back
+              )
+            }}>
+            <Text className='text-sm m-2 text-white'> Trocar câmera </Text>
+          </TouchableOpacity>
+        </View>
+        <BarcodeMask edgeColor="#62B1F6" showAnimatedLine />
+        {scanned && <Button title="Capturar planta" onPress={() => setScanned(false)} />}
+      </BarCodeScanner>
+    </View>
+  )
 }
