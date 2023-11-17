@@ -5,6 +5,7 @@ import Logo from '../../../assets/img/logo.png'
 import { useNavigate } from '@hooks/useNavigate'
 import { formStyles } from '@theme/globalStyles'
 import ButtonSolid from '@components/ButtonSolid'
+import { TextInputMask } from 'react-native-masked-text'
 import { View, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, ScrollView } from 'react-native'
 
 export function RegisterScreen() {
@@ -19,6 +20,8 @@ export function RegisterScreen() {
 
   async function onSubmit() {
     setLoading(true)
+    Keyboard.dismiss()
+
     try {
       const response = await api.post(`/usuario`, {
         name: nome,
@@ -71,12 +74,18 @@ export function RegisterScreen() {
                 />
 
                 <View className='mt-2'>
-                  <TextInput
+                  <TextInputMask
                     value={telefone}
+                    type={'cel-phone'}
                     placeholder="Telefone"
                     keyboardType="decimal-pad"
-                    onChangeText={onChangeTelefone}
                     style={formStyles.compactInput}
+                    options={{
+                      maskType: 'BRL',
+                      withDDD: true,
+                      dddMask: '(99) ',
+                    }}
+                    onChangeText={onChangeTelefone}
                   />
                 </View>
 
