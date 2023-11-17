@@ -1,8 +1,11 @@
 import { api } from '@services/axios'
-import { View, Text } from 'react-native'
+import { colors } from '@theme/colors'
+import { View, Text, Modal } from 'react-native'
 import Loading from '@components/Loading'
 import { useEffect, useState } from 'react'
 import LayoutMain from '@components/LayoutMain'
+import { useNavigate } from '@hooks/useNavigate'
+import ButtonSolid from '@components/ButtonSolid'
 import CardCarteira from '@components/CardCarteira'
 import { useIsFocused } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -15,11 +18,18 @@ interface IDadosUsuario {
   numero_matricula: string
 }
 
-export function PerfilScreen() {
+export function PerfilScreen(props: any) {
+  const idUsuarioVisitante = props.route.params.id
+  const usuarioVisitante = props.route.params.outroUsuario
+
   const isFocused = useIsFocused()
+  const { navigate } = useNavigate()
   const [loading, setLoading] = useState(true)
   const [telefoneMask, setTelefoneMask] = useState('')
+  const [modalUsuario, setModalUsuario] = useState(false)
   const [usuario, setUsuario] = useState<IDadosUsuario | any>()
+  const [telefoneVisitante, setTelefoneVisitante] = useState('')
+  const [dadosVisitante, setDadosVisitante] = useState<IDadosUsuario | any>()
 
   const formatPhoneNumber = (input: string) => {
     // Eliminar caracteres no numéricos
@@ -29,7 +39,19 @@ export function PerfilScreen() {
     const match = cleaned.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
 
     if (match) {
-      setTelefoneMask(`(${match[1]}) ${match[2]}-${match[3]}`);
+      setTelefoneMask(`(${match[1]}) ${match[2]}-${match[3]}`)
+    }
+  }
+
+  const formatPhoneNumberVisitante = (input: string) => {
+    // Eliminar caracteres no numéricos
+    const cleaned = ('' + input).replace(/\D/g, '');
+
+    // Aplicar la máscara al número de teléfono
+    const match = cleaned.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
+
+    if (match) {
+      setTelefoneVisitante(`(${match[1]}) ${match[2]}-${match[3]}`)
     }
   }
 
@@ -51,12 +73,33 @@ export function PerfilScreen() {
     setLoading(false)
   }
 
+  async function getUsuarioVisitante() {
+    setLoading(true)
+    try {
+      const response = await api.get(`/usuario/${idUsuarioVisitante}`)
+      if (response.data.success) {
+        setDadosVisitante(response.data.results)
+        formatPhoneNumberVisitante(response.data.results.telefone)
+        setModalUsuario(true)
+      }
+    } catch (error: any) {
+      console.log('ERRO DADOS USUÁRIO VISITANTE =>', error.response.data)
+    }
+    setLoading(false)
+  }
+
   useEffect(() => {
     getUsuario()
+    if (usuarioVisitante) {
+      getUsuarioVisitante()
+    }
   }, [])
 
   useEffect(() => {
     getUsuario()
+    if (usuarioVisitante) {
+      getUsuarioVisitante()
+    }
   }, [isFocused])
 
   return (
@@ -64,10 +107,33 @@ export function PerfilScreen() {
       {loading &&
         <Loading />
       }
+      <Modal visible={modalUsuario} transparent>
+        <View className='flex-1 items-center justify-center' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+          <View className='w-full'>
+            <View className='bg-white rounded-xl px-3 py-3 mx-6' style={{ elevation: 8 }}>
+              <Text className='text-xl text-center font-bold'>Usuário Validado !</Text>
+              <View className='my-3'>
+                <CardCarteira
+                  id={dadosVisitante?.id}
+                  nome={dadosVisitante?.name}
+                  email={dadosVisitante?.email}
+                  telefone={telefoneVisitante}
+                  numero_carteira={dadosVisitante?.numero_matricula}
+                />
+              </View>
+              <ButtonSolid
+                text='Voltar'
+                backgroundColor={colors.greenSecondary}
+                handleLogin={() => setModalUsuario(false)}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
       <LayoutMain>
         <View className='mx-9 mt-8'>
           <Text className='text-2xl font-bold'>Carteira virtual</Text>
-          <View className='mt-2 mb-4'>
+          <View className='mt-2 mb-12'>
             <CardCarteira
               id={usuario?.id}
               nome={usuario?.name}
@@ -76,6 +142,12 @@ export function PerfilScreen() {
               numero_carteira={usuario?.numero_matricula}
             />
           </View>
+
+          <ButtonSolid
+            text='Validar outras carteiras'
+            backgroundColor={colors.greenSecondary}
+            handleLogin={() => navigate('CameraScreen', { usuario: true })}
+          />
         </View>
 
       </LayoutMain>

@@ -15,9 +15,10 @@ const viewMinX = (width - finderWidth) / 2
 const viewMinY = (height - finderHeight) / 2
 
 
-export function CameraScreen() {
+export function CameraScreen(props: any) {
   const isFocused = useIsFocused()
-  const { navigate } = useNavigate()
+  const { navigate, goBack } = useNavigate()
+  const qrUsuario = props.route.params.usuario
   const [hasPermission, setHasPermission] = useState<boolean | null>(null)
   const [type, setType] = useState<any>(BarCodeScanner.Constants.Type.back)
   const [scanned, setScanned] = useState<boolean>(false)
@@ -37,7 +38,13 @@ export function CameraScreen() {
       if (x >= viewMinX && y >= viewMinY && x <= (viewMinX + finderWidth / 2) && y <= (viewMinY + finderHeight / 2)) {
         setScanned(true)
         const id = data
-        navigate('DetalhesPlantaScreen', { id })
+        if (qrUsuario) {
+          navigate('PerfilScreen', { id, outroUsuario: true })
+          return;
+        } else {
+          navigate('DetalhesPlantaScreen', { id })
+          return;
+        }
       }
     }
   }
@@ -75,7 +82,7 @@ export function CameraScreen() {
           <ButtonSolid
             text='Fechar câmera'
             backgroundColor={colors.greenSecondary}
-            handleLogin={() => navigate('HomeScreen')}
+            handleLogin={() => goBack()}
           />
         </View>
       </BarCodeScanner>
