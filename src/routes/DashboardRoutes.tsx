@@ -1,5 +1,6 @@
 import React from 'react'
 import { HomeScreen } from '@screens/dashboard/HomeScreen'
+import { CameraScreen } from '@screens/dashboard/CameraScreen'
 import { PerfilScreen } from '@screens/dashboard/PerfilScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RegisterPlantaScreen } from '@screens/dashboard/RegisterPlantaScreen'
@@ -19,6 +20,7 @@ export function DashboardRoutes() {
       <Stack.Screen name="RegisterPlantaScreen" component={RegisterPlantaScreen} />
       <Stack.Screen name="PerfilScreen" component={PerfilScreen} />
       <Stack.Screen name="DetalhesPlantaScreen" component={DetalhesPlantaScreen} />
+      <Stack.Screen name="CameraScreen" component={CameraScreen} />
     </Stack.Navigator>
   );
 }
