@@ -3,13 +3,14 @@ import { Text, View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 
 interface IDadosUser {
+    id: any
     nome: string
     email: string
     telefone: string
     numero_carteira: string
 }
 
-export default function CardCarteira({ nome, numero_carteira, telefone, email }: IDadosUser) {
+export default function CardCarteira({ nome, numero_carteira, telefone, email, id }: IDadosUser) {
     return (
         <View
             className='bg-white rounded-lg p-5'
@@ -21,10 +22,10 @@ export default function CardCarteira({ nome, numero_carteira, telefone, email }:
                 {nome}
             </Text>
 
-            {numero_carteira &&
+            {id &&
                 <View className='w-full justify-center items-center pt-3'>
                     <QRCode
-                        value={numero_carteira}
+                        value={id.toString()}
                     />
                 </View>
             }
