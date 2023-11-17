@@ -1,9 +1,9 @@
 import { api } from '@services/axios'
 import { colors } from '@theme/colors'
-import { View, Text, Modal } from 'react-native'
 import Loading from '@components/Loading'
 import { useEffect, useState } from 'react'
 import LayoutMain from '@components/LayoutMain'
+import { View, Text, Modal } from 'react-native'
 import { useNavigate } from '@hooks/useNavigate'
 import ButtonSolid from '@components/ButtonSolid'
 import CardCarteira from '@components/CardCarteira'
@@ -25,6 +25,7 @@ export function PerfilScreen(props: any) {
   const isFocused = useIsFocused()
   const { navigate } = useNavigate()
   const [loading, setLoading] = useState(true)
+  const [modalErro, setModalErro] = useState(false)
   const [telefoneMask, setTelefoneMask] = useState('')
   const [modalUsuario, setModalUsuario] = useState(false)
   const [usuario, setUsuario] = useState<IDadosUsuario | any>()
@@ -75,14 +76,18 @@ export function PerfilScreen(props: any) {
 
   async function getUsuarioVisitante() {
     setLoading(true)
+    setModalErro(false)
     try {
       const response = await api.get(`/usuario/${idUsuarioVisitante}`)
       if (response.data.success) {
         setDadosVisitante(response.data.results)
         formatPhoneNumberVisitante(response.data.results.telefone)
         setModalUsuario(true)
+        return;
       }
+      setModalErro(true)
     } catch (error: any) {
+      setModalErro(true)
       console.log('ERRO DADOS USUÁRIO VISITANTE =>', error.response.data)
     }
     setLoading(false)
@@ -107,6 +112,21 @@ export function PerfilScreen(props: any) {
       {loading &&
         <Loading />
       }
+      <Modal visible={modalErro} transparent>
+        <View className='flex-1 items-center justify-center' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+          <View className='bg-white rounded-xl px-3 py-3 mx-4' style={{ elevation: 8 }}>
+            <Text className='text-xl text-center font-bold'>Erro ao localizar usuário</Text>
+            <View className='my-3'>
+              <Text className='text-center'>Ocorreu um erro ao localizar esse usuário, faça o scan novamente !</Text>
+            </View>
+            <ButtonSolid
+              text='Voltar e tentar novamente'
+              backgroundColor={colors.greenSecondary}
+              handleLogin={() => setModalErro(false)}
+            />
+          </View>
+        </View>
+      </Modal>
       <Modal visible={modalUsuario} transparent>
         <View className='flex-1 items-center justify-center' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
           <View className='w-full'>
