@@ -1,12 +1,15 @@
-# Gera APK
+## Gera APK
 - eas build -p android --profile preview
 
-# Rodar o prebuild (android)
+## Rodar o prebuild (android)
 serve para libs nativas
 - npx expo prebuild
 
-npx expo prebuild
+## Informações úteis
+- Banco: Postgres
 
-informe o seu nome de pacote ex: com.angeloricardoweb.hefesto
+Utilizei o [https://neon.tech/](Neon Tech) para hospedar o banco de dados remoto.
 
-npx expo run:android
+Utilizei o [https://render.com/](Render) para hospedagem da aplicação back-end em node.
+
+Todos serviços utilizados são gratuitos !
