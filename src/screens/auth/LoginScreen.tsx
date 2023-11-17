@@ -1,13 +1,13 @@
 import { api } from '@services/axios'
 import React, { useState } from 'react'
+import Loading from '@components/Loading'
 import Logo from '../../../assets/img/logo.png'
 import { useNavigate } from '@hooks/useNavigate'
 import { formStyles } from '@theme/globalStyles'
 import ButtonSolid from '@components/ButtonSolid'
 import useAuthenticatedStore from '@stores/useAuthenticatedStore'
-import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Loading from '@components/Loading'
+import { View, Text, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, TouchableOpacity } from 'react-native'
 
 export function LoginScreen() {
   const { navigate } = useNavigate()
@@ -18,6 +18,8 @@ export function LoginScreen() {
 
   async function onSubmit() {
     setLoading(true)
+    Keyboard.dismiss()
+
     try {
       const response = await api.post(`/login`, {
         email: email,

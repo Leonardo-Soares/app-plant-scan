@@ -1,7 +1,11 @@
+import { useNavigate } from '@hooks/useNavigate'
 import React, { useEffect, useState } from 'react'
 import BarcodeMask from 'react-native-barcode-mask'
+import { useIsFocused } from '@react-navigation/native'
 import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
 import { Button, Dimensions, StyleSheet, TouchableOpacity, View, Text } from 'react-native'
+import ButtonSolid from '@components/ButtonSolid'
+import { colors } from '@theme/colors'
 
 const finderWidth: number = 280
 const finderHeight: number = 230
@@ -12,6 +16,8 @@ const viewMinY = (height - finderHeight) / 2
 
 
 export function CameraScreen() {
+  const isFocused = useIsFocused()
+  const { navigate } = useNavigate()
   const [hasPermission, setHasPermission] = useState<boolean | null>(null)
   const [type, setType] = useState<any>(BarCodeScanner.Constants.Type.back)
   const [scanned, setScanned] = useState<boolean>(false)
@@ -30,7 +36,8 @@ export function CameraScreen() {
       const { x, y } = origin
       if (x >= viewMinX && y >= viewMinY && x <= (viewMinX + finderWidth / 2) && y <= (viewMinY + finderHeight / 2)) {
         setScanned(true)
-        alert(`QR Code do tipo ${type} e dados:  ${data}`)
+        const id = data
+        navigate('DetalhesPlantaScreen', { id })
       }
     }
   }
@@ -41,6 +48,7 @@ export function CameraScreen() {
   if (hasPermission === false) {
     return <Text>Você não autorizou acessr sua câmera</Text>
   }
+
   return (
     <View className='flex-1'>
       <BarCodeScanner onBarCodeScanned={handleBarCodeScanned}
@@ -63,7 +71,13 @@ export function CameraScreen() {
           </TouchableOpacity>
         </View>
         <BarcodeMask edgeColor="#62B1F6" showAnimatedLine />
-        {scanned && <Button title="Capturar planta" onPress={() => setScanned(false)} />}
+        <View className='w-full px-8 pb-12 '>
+          <ButtonSolid
+            text='Fechar câmera'
+            backgroundColor={colors.greenSecondary}
+            handleLogin={() => navigate('HomeScreen')}
+          />
+        </View>
       </BarCodeScanner>
     </View>
   )
