@@ -80,7 +80,7 @@ export function HomeScreen() {
         <View className='mt-4 mb-8 mx-9'>
           <CardTopico
             titulo='Planta Qr Code'
-            onPress={() => navigate('CameraScreen')}
+            onPress={() => navigate('CameraScreen', { usuario: false })}
           />
           <CardTopico
             mt={20}

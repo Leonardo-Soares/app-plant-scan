@@ -15,7 +15,7 @@ const viewMinX = (width - finderWidth) / 2
 const viewMinY = (height - finderHeight) / 2
 
 
-export function CameraScreen(props: any) {
+export function CameraScreen(props?: any) {
   const isFocused = useIsFocused()
   const { navigate, goBack } = useNavigate()
   const qrUsuario = props.route.params.usuario

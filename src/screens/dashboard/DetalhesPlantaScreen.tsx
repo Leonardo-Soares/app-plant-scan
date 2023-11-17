@@ -19,7 +19,7 @@ interface IDetalhePlanta {
   characteristics: string
 }
 
-export function DetalhesPlantaScreen(props: any) {
+export function DetalhesPlantaScreen(props?: any) {
   const isFocused = useIsFocused()
   const { navigate } = useNavigate()
   const idPlanta = props.route.params.id 
@@ -95,15 +95,15 @@ export function DetalhesPlantaScreen(props: any) {
           </View>
           <View className='items-center mt-2 mb-4'>
             <Text className='text-lg text-[#707070]'>Efeitos</Text>
-            <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.curiosities}</Text>
+            <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.effects}</Text>
           </View>
           <View className='items-center mt-2 mb-4'>
             <Text className='text-lg text-[#707070]'>Características</Text>
-            <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.curiosities}</Text>
+            <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.characteristics}</Text>
           </View>
           <View className='items-center mt-2 mb-4'>
             <Text className='text-lg text-[#707070]'>Grupo(s)</Text>
-            <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.curiosities}</Text>
+            <Text className='text-2xl font-bold text-[#0B845C]'>{planta?.names_group}</Text>
           </View>
         </View>
       </LayoutMain>
