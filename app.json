@@ -19,51 +19,20 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "br.com.plantscan"
+      "bundleIdentifier": "com.bredi.takeme"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "br.com.plantscan"
+      "package": "com.bredi.takeme"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      [
-        "onesignal-expo-plugin",
-        {
-          "mode": "development"
-        }
-      ],
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "Permitir $(PRODUCT_NAME) acesse sua câmera."
-        }
-      ]
-    ],
     "extra": {
       "eas": {
-        "build": {
-          "experimental": {
-            "ios": {
-              "appExtensions": [
-                {
-                  "targetName": "OneSignalNotificationServiceExtension",
-                  "bundleIdentifier": "br.com.plantscan.OneSignalNotificationServiceExtension",
-                  "entitlements": {
-                    "com.apple.security.application-groups": [
-                      "group.br.com.plantscan.onesignal"
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        },
         "projectId": "dc52bd1a-d257-4dd5-af81-f4cd174d9103"
       }
     }

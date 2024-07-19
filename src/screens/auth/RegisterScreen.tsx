@@ -9,7 +9,7 @@ import { TextInputMask } from 'react-native-masked-text'
 import { View, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ImageBackground, Alert, ScrollView } from 'react-native'
 
 export function RegisterScreen() {
-  const { navigate } = useNavigate()
+  const { navigate, goBack } = useNavigate()
   const [nome, onChangeNome] = useState('')
   const [email, onChangeEmail] = useState('')
   const [loading, setLoading] = useState(false)
@@ -137,6 +137,13 @@ export function RegisterScreen() {
               text='Criar conta'
               isLoading={false}
               handleLogin={onSubmit}
+            />
+            <View className='my-2'></View>
+            <ButtonSolid
+              text='Voltar'
+              isLoading={false}
+              backgroundColor='#000'
+              handleLogin={() => goBack()}
             />
           </View>
         </ImageBackground>

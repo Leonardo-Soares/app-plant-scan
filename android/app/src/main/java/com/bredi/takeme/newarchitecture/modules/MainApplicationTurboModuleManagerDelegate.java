@@ -1,4 +1,4 @@
-package br.com.plantscan.newarchitecture.modules;
+package com.bredi.takeme.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

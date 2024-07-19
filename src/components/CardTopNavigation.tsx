@@ -61,7 +61,7 @@ export default function CardTopNavigation({ idUsuario }: { idUsuario?: any }) {
                     <TouchableOpacity onPress={() => setModalMenu(false)} className='absolute top-8 right-8 z-50'>
                         <IcoClose />
                     </TouchableOpacity>
-                    <View className='items-end gap-y-8'>
+                    <View className='items-end gap-y-8 z-50'>
                         <TouchableOpacity className='z-50' onPress={onHome}>
                             <Text className='text-4xl font-bold text-white'>Home</Text>
                         </TouchableOpacity>

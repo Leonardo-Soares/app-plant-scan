@@ -1,4 +1,4 @@
-package br.com.plantscan;
+package com.bredi.takeme;
 
 import android.os.Build;
 import android.os.Bundle;

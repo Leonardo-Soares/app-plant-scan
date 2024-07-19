@@ -3,12 +3,13 @@ import { colors } from '@theme/colors'
 import Loading from '@components/Loading'
 import { useEffect, useState } from 'react'
 import LayoutMain from '@components/LayoutMain'
-import { View, Text, Modal } from 'react-native'
+import { View, Text, Modal, Alert } from 'react-native'
 import { useNavigate } from '@hooks/useNavigate'
 import ButtonSolid from '@components/ButtonSolid'
 import CardCarteira from '@components/CardCarteira'
 import { useIsFocused } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import useAuthenticatedStore from '@stores/useAuthenticatedStore'
 
 interface IDadosUsuario {
   id: any
@@ -27,6 +28,7 @@ export function PerfilScreen(props: any) {
   const [loading, setLoading] = useState(true)
   const [modalErro, setModalErro] = useState(false)
   const [telefoneMask, setTelefoneMask] = useState('')
+  const { setIsAuthenticated } = useAuthenticatedStore()
   const [modalUsuario, setModalUsuario] = useState(false)
   const [usuario, setUsuario] = useState<IDadosUsuario | any>()
   const [telefoneVisitante, setTelefoneVisitante] = useState('')
@@ -89,6 +91,24 @@ export function PerfilScreen(props: any) {
     } catch (error: any) {
       setModalErro(true)
       console.log('ERRO DADOS USUÁRIO VISITANTE =>', error.response.data)
+    }
+    setLoading(false)
+  }
+
+  async function deleteUser() {
+    setLoading(true)
+    try {
+      const response = await api.delete(`/usuarios/${usuario.id}`)
+      if (response.status === 200) {
+        Alert.alert('Conta deletada com sucesso !')
+      }
+      else {
+        Alert.alert('Erro ao deletar conta !')
+      }
+
+      setIsAuthenticated(false)
+    } catch (error: any) {
+      console.error('ERRO AO DELETAR USUÁRIO =>', error.response.data);
     }
     setLoading(false)
   }
@@ -163,10 +183,28 @@ export function PerfilScreen(props: any) {
             />
           </View>
 
-          <ButtonSolid
+          {/* <ButtonSolid
             text='Validar outras carteiras'
             backgroundColor={colors.greenSecondary}
             handleLogin={() => navigate('CameraScreen', { usuario: true })}
+          /> */}
+
+          <View className='my-2'></View>
+
+          <ButtonSolid
+            text='Deletar conta'
+            backgroundColor={colors.danger}
+            handleLogin={() => Alert.alert('Deletar conta', 'Tem certeza que deseja deletar sua conta ?', [
+              {
+                text: 'Cancelar',
+                style: 'cancel'
+              },
+              {
+                text: 'Deletar',
+                onPress: () => deleteUser()
+              }
+            ])
+            }
           />
         </View>
 

@@ -1,4 +1,4 @@
-package br.com.plantscan.newarchitecture;
+package com.bredi.takeme.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import br.com.plantscan.BuildConfig;
-import br.com.plantscan.newarchitecture.components.MainComponentsRegistry;
-import br.com.plantscan.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.bredi.takeme.BuildConfig;
+import com.bredi.takeme.newarchitecture.components.MainComponentsRegistry;
+import com.bredi.takeme.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
